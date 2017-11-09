@@ -10,19 +10,19 @@ struct TreeNode {
 	bool state;//节点状态
 	TreeNode * child[MAX_CHILD];//孩子指针
 };
-class TrieTree{
-	private:
-		TreeNode * root;
-		TreeNode * createNode(TYPE value, DTYPE data);
-		void insertNode(TreeNode * node);
-	public:
-		TreeNode * getRoot();
-		TrieTree();
-		~TrieTree();
-		void deepOrder();
-		void add(TYPE value[]);
-		bool find(TYPE value[]);
-		void deepOrder(TreeNode * node, vector<char> &v, int & count);
+class TrieTree {
+private:
+	TreeNode * root;
+	TreeNode * createNode(TYPE value, DTYPE data);
+	void insertNode(TreeNode * node);
+public:
+	TreeNode * getRoot();
+	TrieTree();
+	~TrieTree();
+	void deepOrder();
+	void add(TYPE value[]);
+	bool find(TYPE value[]);
+	void deepOrder(TreeNode * node, vector<char> &v, int & count);
 };
 int chartoindex(char a) {
 	return a - 'a';
@@ -49,9 +49,11 @@ TrieTree::~TrieTree() {
 	}
 
 }
+
 TreeNode * TrieTree::getRoot() {
 	return root;
 }
+
 TreeNode * TrieTree::createNode(TYPE value, DTYPE data) {
 	TreeNode *node = new TreeNode();
 	node->state = false;
@@ -62,6 +64,7 @@ TreeNode * TrieTree::createNode(TYPE value, DTYPE data) {
 	}
 	return node;
 }
+// 插入孩子节点
 void TrieTree::insertNode(TreeNode * node) {
 	if (node != NULL) {
 		for (int i = 0; i<MAX_CHILD; i++) {
@@ -71,6 +74,7 @@ void TrieTree::insertNode(TreeNode * node) {
 		}
 	}
 }
+// 加入某个字符串
 void TrieTree::add(TYPE value[]) {
 	TreeNode * ptr = root;
 	int length = strlen(value);
@@ -82,7 +86,7 @@ void TrieTree::add(TYPE value[]) {
 	}
 	ptr->state = true;
 }
-
+// 寻找某个字符串是否存在于字典树
 bool TrieTree::find(TYPE value[]) {
 	TreeNode * ptr = root;
 	int length = strlen(value);
@@ -99,6 +103,8 @@ bool TrieTree::find(TYPE value[]) {
 		return false;
 	}
 }
+
+//深度优先遍历字典树并打印字符串
 void TrieTree::deepOrder(TreeNode * node, vector<char> &v, int &count) {
 	TreeNode * ptr = node;
 	if (ptr == NULL) {
@@ -111,7 +117,7 @@ void TrieTree::deepOrder(TreeNode * node, vector<char> &v, int &count) {
 				printf("%d: ", ++count);
 				printString(v);
 			}
-			deepOrder(ptr->child[i], v,count);
+			deepOrder(ptr->child[i], v, count);
 			v.pop_back();
 		}
 	}
@@ -124,8 +130,18 @@ int main() {
 	tree.add("zhch");
 	vector<char> v;
 	int count = 0;
-	tree.deepOrder(tree.getRoot(),v,count);
+	tree.deepOrder(tree.getRoot(), v, count);
+	if (tree.find("xsl")) {
+		printf("YES\n");
+	}
+	else {
+		printf("NO\n");
+	}
+	if (tree.find("xl")) {
+		printf("YES\n");
+	}
+	else {
+		printf("NO\n");
+	}
 	return 0;
 }
-
-
